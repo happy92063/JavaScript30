@@ -61,33 +61,27 @@
 
 
 (function(){
+
+  window.addEventListener('keydown', playSound)
+
+  function playSound(e){
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    audio.currentTime = 0
+    if(audio) audio.play()
+
+    const dom = document.querySelector(`div[data-key="${e.keyCode}"]`)
+    if(dom) dom.classList.add('playing')
     
+  }
+  document.querySelectorAll('.key').forEach(function(key){
+    key.addEventListener('transitionend',removeTransition)
+  })
 
-    function playHandler(e){
-      // console.log(e);
-      const  audio= document.querySelector(`audio[data-key="${e.keyCode}"]`)
-      audio.currentTime = 0
-      if(audio) audio.play()
-
-      const dom = document.querySelector(`div[data-key="${e.keyCode}"]`)
-      if(dom) dom.classList.add('playing')
-
-      // console.log(audio,dom);
+  function removeTransition(e){
+    if(e.propertyName === 'transform'){
+      e.currentTarget.classList.remove('playing')
     }
-    function transitionHandler(e){
-      if(e.propertyName !== 'transform') return;
-        e.target.classList.remove('playing')
-      
-    }
-   
-    window.addEventListener('keydown',playHandler)
-
-    document.querySelectorAll('.key').forEach(function(key){
-        console.log(key);
-          key.addEventListener('transitionend',transitionHandler)
-        })
-    
-
+  }
 })()
 
 
