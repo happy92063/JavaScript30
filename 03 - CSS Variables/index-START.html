@@ -21,7 +21,19 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
-
+    html{
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur:10px
+    }
+    img{
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+    .h1{
+      background: var(--base);
+    }
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -45,6 +57,18 @@
   </style>
 
   <script>
+    // 選取每個Input
+    const inputs = document.querySelectorAll('input')
+    // 分別在每個輸入框新增change、滑鼠滑動事件
+    inputs.forEach(input => input.addEventListener('change',handleUpdate))
+    inputs.forEach(input => input.addEventListener('mousemove',handleUpdate))
+    // 先宣告單位、從dataset取值沒有的話就空值，再從網頁中有變數的值分別帶入
+    function handleUpdate(){
+      const suffix = this.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${this.name}`,this.value + suffix);
+    }
+
+
   </script>
 
 </body>
