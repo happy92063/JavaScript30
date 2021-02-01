@@ -60,37 +60,36 @@
 <script>
 
 
+// 立即函式 進來網頁直接觸發
 (function(){
-    
+  // 從window 綁定事件，利用按下鍵盤觸發函式
+  window.addEventListener('keydown', playMusic)
 
-    function playHandler(e){
-      // console.log(e);
-      const  audio= document.querySelector(`audio[data-key="${e.keyCode}"]`)
-      audio.currentTime = 0
-      if(audio) audio.play()
-
-      const dom = document.querySelector(`div[data-key="${e.keyCode}"]`)
-      if(dom) dom.classList.add('playing')
-
-      // console.log(audio,dom);
-    }
-    function transitionHandler(e){
-      if(e.propertyName !== 'transform') return;
-        e.target.classList.remove('playing')
-      
-    }
-   
-    window.addEventListener('keydown',playHandler)
-
-    document.querySelectorAll('.key').forEach(function(key){
-        console.log(key);
-          key.addEventListener('transitionend',transitionHandler)
-        })
-    
+  function playMusic(e){
+    // 取得鍵盤的keyCode
+    console.log(e); 
+    // 利用keyCode抓取對應的標籤
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    // 音樂間隔時間縮短
+    audio.currentTime = 0
+    // 判斷有無標籤，有就播放
+    if(audio) audio.play()
+    // 利用keyCode抓取對應的標籤
+    const dom = document.querySelector(`div[data-key="${e.keyCode}"]`)
+    // 判斷有無標籤，有就增加class
+    if(dom) dom.classList.add('playing')
+  }
+  // 把每個key都抓出來，利用foreach編歷出來，分別加入事件監聽，在動畫結束式，觸發函式
+  document.querySelectorAll('.key').forEach(function(key){
+    key.addEventListener("transitionend",removeClass)
+  })
+  // 判斷屬性內有沒有transform，.有就把class刪除
+  function removeClass(e){
+    if(e.propertyName === "transform")
+      e.target.classList.remove('playing')
+  }
 
 })()
-
-
 
 
 
