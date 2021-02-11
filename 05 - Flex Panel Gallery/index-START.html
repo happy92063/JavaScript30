@@ -96,7 +96,7 @@
 
     .panel.open {
       font-size: 40px;
-      flex: 3;
+      flex: 5;
     }
     
 
@@ -135,15 +135,18 @@
     let panels = document.querySelectorAll('.panel')
     panels.forEach((panel)=>{
       panel.addEventListener('click', clickHandler)
-      panel.addEventListener('transitionend', transitionendHandler)
+      panel.addEventListener('transitionend', transitionHandler)
     })
+
     function clickHandler(){
-      this.classList.toggle("open")
+      this.classList.toggle('open') //增加變大效果
     }
-    function transitionendHandler(e){
-      if(e.propertyName.includes('flex'))
-      this.classList.toggle("open-active")
+    function transitionHandler(e){
+      if(e.propertyName.includes('flex')){ //跑完動畫後，檢查屬性名子內有無flex
+        this.classList.toggle('open-active')
+      }
     }
+
 
   </script>
 
