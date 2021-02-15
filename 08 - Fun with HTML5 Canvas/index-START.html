@@ -7,6 +7,59 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+  let canvas = document.querySelector('#draw')
+  // 設定為2D動畫
+  let ctx = canvas.getContext('2d');
+  let color = 0;
+  let lineWidth = 50;
+  // 設定為window寬跟高
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  // 利用樣板字串設定顏色
+  // ctx.strokeStyle = `hsl(${color},100%,50%)`;
+  // ctx.lineWidth = lineWidth;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  let drawing = false
+  let x = 0, y = 0;
+  let direction = -1;
+  canvas.addEventListener('mousedown', (e) => {
+    drawing = true;
+    // 判斷按下去的位置
+    [x, y] = [e.offsetX, e.offsetY];
+  })
+  canvas.addEventListener('mousemove', (e) => {
+    // 判斷是否可以畫，不行就回傳
+    if(!drawing) return
+    console.log(e);
+    // 開始畫
+    ctx.beginPath();
+    // 360內慢慢+1，超過變0
+    color = color < 360 ? color + 1 : 0;
+    // 利用樣板字串設定顏色
+    ctx.strokeStyle = `hsl(${color},100%,50%)`;
+    // 判斷線寬度超過50或1
+    if(lineWidth < 1 || lineWidth > 50){
+      // 更改大小
+      direction *= -1
+    }
+    lineWidth += direction
+    ctx.lineWidth = lineWidth;
+    ctx.moveTo(x, y);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    [x, y] = [e.offsetX, e.offsetY];
+    ctx.stroke();
+   
+    
+
+  })
+  canvas.addEventListener('mouseup', () => {
+    drawing = false;
+  })
+  canvas.addEventListener('mouseleave', () => {
+    drawing = false;
+  })
 </script>
 
 <style>
