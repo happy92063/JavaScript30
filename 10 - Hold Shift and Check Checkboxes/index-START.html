@@ -96,6 +96,29 @@
   </div>
 
 <script>
+  let lastCheck;
+  function handleCheck(e){
+    // 當作選取區間的標記
+    let inBetween = false;
+    // 檢查是否按著shift鍵點選
+    if(e.shiftKey && this.checked){
+      checkboxs.forEach(checkbox => {
+        // 當前第一筆點選開始記錄到最後一筆關閉標記
+        if(checkbox === this || checkbox === lastCheck){
+          inBetween = !inBetween;
+        }
+        // 勾選區間內為true的checkbox
+        if(inBetween){
+          checkbox.checked = true;
+        }
+      })
+    }
+    lastCheck = this;
+  }
+  // 抓到每筆input
+  let checkboxs = document.querySelectorAll('input[type="checkbox"]')
+  // 為每個checkbox增加click事件
+  checkboxs.forEach(checkbox=>{checkbox.addEventListener('click',handleCheck)})
 </script>
 </body>
 </html>
