@@ -7,6 +7,20 @@
 </head>
 <body>
 <script>
+  // 先宣告空陣列
+  let pressed = [];
+  // 密碼
+  let secretCode = 'tom';
+  // 監測鍵盤按鈕後，利用splice把舊的輸入彈出，判斷陣列跟密碼是否相同，相同產出效果。
+  window.addEventListener('keyup', e => {
+    pressed.push(e.key);
+    pressed.splice(-secretCode.length -1, pressed.length - secretCode.length);
+    if(pressed.join('').includes(secretCode)){
+      cornify_add();
+    }
+    console.log(pressed);
+  })
+
 </script>
 </body>
 </html>
